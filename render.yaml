@@ -3,6 +3,8 @@ services:
     name: full-backend
     runtime: ruby
     buildCommand: ./bin/render-build.sh
+    releaseCommand: ./bin/rails db:prepare
+
     startCommand: ./bin/thrust ./bin/rails server
     envVars:
       - key: DATABASE_URL

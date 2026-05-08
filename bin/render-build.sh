@@ -20,5 +20,5 @@ cd ..
 bundle exec rails assets:precompile
 bundle exec rails assets:clean
 
-# Run migrations
-bundle exec rails db:prepare
+# (Migrations are now handled by the releaseCommand in render.yaml)
+
