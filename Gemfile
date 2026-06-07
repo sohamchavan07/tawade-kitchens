@@ -63,3 +63,7 @@ end
 
 gem "omniauth-google-oauth2", "~> 1.2"
 gem "omniauth-rails_csrf_protection", "~> 2.0"
+
+gem "activeadmin", "~> 3.5"
+gem "sidekiq", "~> 8.1"
+gem "razorpay", "~> 3.2"

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   devise_for :users, skip: [ :registrations, :sessions ], controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   devise_scope :user do
     # SPA should handle these GET requests
@@ -10,6 +12,11 @@ Rails.application.routes.draw do
     delete "/users/sign_out", to: "devise/sessions#destroy", as: :destroy_user_session
     post "/users", to: "devise/registrations#create", as: :user_registration
   end
+  namespace :api do
+    resources :products, only: [ :index, :show ]
+    resources :orders, only: [ :create ]
+  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
