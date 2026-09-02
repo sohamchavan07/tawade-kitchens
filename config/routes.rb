@@ -13,6 +13,10 @@ Rails.application.routes.draw do
     post "/users", to: "devise/registrations#create", as: :user_registration
   end
   namespace :api do
+    namespace :v1 do
+      resources :products, only: [ :index, :show ]
+      resources :orders, only: [ :create, :show ], param: :order_number
+    end
     resources :products, only: [ :index, :show ]
     resources :orders, only: [ :create ]
   end
