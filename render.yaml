@@ -23,6 +23,8 @@ services:
         value: tawade-kitchens.onrender.com
       - key: RAILS_PROTOCOL
         value: https
+      - key: VITE_API_URL
+        value: https://tawade-kitchens.onrender.com
 
 databases:
   - name: full-backend-db
