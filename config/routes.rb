@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  devise_for :users, skip: [ :registrations, :sessions ], controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+  devise_for :users, skip: [ :registrations, :sessions ], controllers: { omniauth_callbacks: "users/omniauth_callbacks" }, only: [ :omniauth_callbacks ]
   devise_scope :user do
     # SPA should handle these GET requests
     get "/users/sign_in", to: "application#fallback_index_html", as: :new_user_session
