@@ -19,6 +19,10 @@ services:
         value: production
       - key: RAILS_SERVE_STATIC_FILES
         value: "true"
+      - key: RAILS_HOST
+        value: tawade-kitchens.onrender.com
+      - key: RAILS_PROTOCOL
+        value: https
 
 databases:
   - name: full-backend-db
