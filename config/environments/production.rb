@@ -62,7 +62,7 @@ Rails.application.configure do
 
   # Set host to be used by links generated in mailer templates.
   # Use environment variable for production host, defaults to localhost for backward compatibility
-  config.action_mailer.default_url_options = { 
+  config.action_mailer.default_url_options = {
     host: ENV.fetch("RAILS_HOST", "localhost"),
     protocol: ENV.fetch("RAILS_PROTOCOL", "https")
   }
