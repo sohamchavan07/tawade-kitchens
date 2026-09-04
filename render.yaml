@@ -7,22 +7,26 @@ services:
 
     startCommand: ./bin/thrust ./bin/rails server
     envVars:
-  - key: DATABASE_URL
-    fromDatabase:
-      name: full-backend-db
-      property: connectionString
-  - key: RAILS_MASTER_KEY
-    sync: false
-  - key: NODE_VERSION
-    value: 22.22.1
-  - key: RAILS_ENV
-    value: production
-  - key: RAILS_SERVE_STATIC_FILES
-    value: "true"
-  - key: VITE_API_URL
-    value: https://tawade-kitchens.onrender.com
-  - key: ALLOWED_ORIGINS
-    value: https://tawade-kitchen.vercel.app
+      - key: DATABASE_URL
+        fromDatabase:
+          name: full-backend-db
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: NODE_VERSION
+        value: 22.22.1
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_SERVE_STATIC_FILES
+        value: "true"
+      - key: RAILS_HOST
+        value: tawade-kitchens.onrender.com
+      - key: RAILS_PROTOCOL
+        value: https
+      - key: VITE_API_URL
+        value: https://tawade-kitchens.onrender.com
+      - key: ALLOWED_ORIGINS
+        value: https://tawade-kitchen.vercel.app
 
 databases:
   - name: full-backend-db
