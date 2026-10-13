@@ -11,12 +11,32 @@ class Product < ApplicationRecord
 
   scope :available, -> { where(is_available: true) }
   scope :by_category, ->(cat) { where(category: cat) if cat.present? }
+  scope :spicy, -> { where("LOWER(spice_level) IN (?) OR LOWER(name) IN (?)", %w[spicy medium], %w[bakarvadi sev chakli]) }
+  scope :veg, -> { where(vegetarian: true) }
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[
       id name description price stock_quantity category
-      preparation_time vegetarian is_available created_at updated_at
+      preparation_time vegetarian is_available ingredients spice_level
+      created_at updated_at
     ]
+  end
+
+  def as_catalog_json
+    {
+      id: id,
+      name: name,
+      price: price.to_f,
+      category: category,
+      vegetarian: vegetarian,
+      is_available: is_available,
+      stock_quantity: stock_quantity,
+      preparation_time: preparation_time,
+      ingredients: ingredients,
+      spice_level: spice_level || "mild",
+      description: description,
+      image_url: image_url
+    }
   end
 
   def self.ransackable_associations(_auth_object = nil)

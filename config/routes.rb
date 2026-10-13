@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       resources :orders, only: [ :create, :show ], param: :order_number
       get "whatsapp/webhook", to: "whatsapp#verify"
       post "whatsapp/webhook", to: "whatsapp#webhook"
+      post "assistant/chat", to: "assistant#chat"
     end
     resources :products, only: [ :index, :show ]
     resources :orders, only: [ :create ]

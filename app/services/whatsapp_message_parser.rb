@@ -88,9 +88,9 @@ class WhatsappMessageParser
 
     order = if order_number.present?
               Order.find_by("LOWER(order_number) = ?", order_number.downcase)
-            elsif sender_phone.present?
+    elsif sender_phone.present?
               Order.where(customer_phone: sender_phone).order(created_at: :desc).first
-            end
+    end
 
     if order.nil?
       return {
@@ -274,7 +274,7 @@ class WhatsappMessageParser
       end
     end
 
-    [parsed, errors]
+    [ parsed, errors ]
   end
 
   def match_product(query, products)
@@ -331,7 +331,7 @@ class WhatsappMessageParser
     end
 
     time_str = slot_time.strftime("%I:%M %p")
-    [date.iso8601, time_str]
+    [ date.iso8601, time_str ]
   end
 
   def normalize_phone(phone)
