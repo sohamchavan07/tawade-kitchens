@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   end
   namespace :api do
     namespace :v1 do
+      get "auth/status", to: "auth#status"
       resources :products, only: [ :index, :show ]
       resources :orders, only: [ :create, :show ], param: :order_number
       get "whatsapp/webhook", to: "whatsapp#verify"
