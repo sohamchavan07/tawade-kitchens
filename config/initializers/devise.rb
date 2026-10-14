@@ -275,18 +275,14 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  google_client_id = ENV.fetch("GOOGLE_CLIENT_ID", "dummy_client_id")
-  google_client_secret = ENV.fetch("GOOGLE_CLIENT_SECRET", "dummy_client_secret")
-  oauth_base_url = ENV["OAUTH_BASE_URL"]
-  callback_url = oauth_base_url.present? ? "#{oauth_base_url}/users/auth/google_oauth2/callback" : nil
-
-  omniauth_options = {
-    scope: "email,profile",
-    prompt: "select_account"
-  }
-  omniauth_options[:callback_url] = callback_url if callback_url
-
-  config.omniauth :google_oauth2, google_client_id, google_client_secret, omniauth_options
+  config.omniauth :google_oauth2,
+    ENV.fetch("GOOGLE_CLIENT_ID", "dummy_client_id"),
+    ENV.fetch("GOOGLE_CLIENT_SECRET", "dummy_client_secret"),
+    {
+      scope: "email,profile",
+      prompt: "select_account",
+      callback_url: ENV["OAUTH_BASE_URL"].present? ? "#{ENV['OAUTH_BASE_URL']}/users/auth/google_oauth2/callback" : nil
+    }
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
