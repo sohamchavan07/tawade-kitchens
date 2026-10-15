@@ -275,7 +275,7 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  oauth_base_url = ENV["OAUTH_BASE_URL"].presence || "https://#{ENV.fetch("RAILS_HOST", "localhost")}" 
+  oauth_base_url = ENV["OAUTH_BASE_URL"].presence || "https://#{ENV.fetch("RAILS_HOST", "localhost")}"
   callback_url = "#{oauth_base_url}/users/auth/google_oauth2/callback"
 
   config.omniauth :google_oauth2,
