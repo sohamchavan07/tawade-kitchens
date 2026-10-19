@@ -2,6 +2,18 @@
 
 Tawade Kitchen is a pickup-only food ordering web application for authentic Kolhapuri homemade snacks and sweets (लाडू, चकली, फराळ).
 
+## 📸 Screenshots
+
+<div align="center">
+  <img src="frontend/src/assets/hero-banner.jpg" alt="Tawade Kitchen landing page" width="1000" />
+</div>
+
+<div align="center">
+  <img src="frontend/src/assets/ladoo.jpg" alt="Besan Ladoo product" width="320" />
+  <img src="frontend/src/assets/rava-ladoo.jpg" alt="Rava Ladoo product" width="320" />
+  <img src="frontend/src/assets/chakli.jpg" alt="Chakli product" width="320" />
+</div>
+
 ---
 
 ## 🏗️ Architecture & Technology Stack
