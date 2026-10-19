@@ -5,13 +5,12 @@ Tawade Kitchen is a pickup-only food ordering web application for authentic Kolh
 ## 📸 Screenshots
 
 <div align="center">
-  <img src="frontend/src/assets/hero-banner.jpg" alt="Tawade Kitchen landing page" width="1000" />
+  <img src="frontend/src/assets/Screenshot from 2026-10-19 20-36-41.png" alt="Tawade Kitchen home screen" width="1000" />
 </div>
 
 <div align="center">
-  <img src="frontend/src/assets/ladoo.jpg" alt="Besan Ladoo product" width="320" />
-  <img src="frontend/src/assets/rava-ladoo.jpg" alt="Rava Ladoo product" width="320" />
-  <img src="frontend/src/assets/chakli.jpg" alt="Chakli product" width="320" />
+  <img src="frontend/src/assets/Screenshot from 2026-10-19 20-37-17.png" alt="Tawade Kitchen menu grid" width="320" />
+  <img src="frontend/src/assets/Screenshot from 2026-10-19 20-38-36.png" alt="Tawade Kitchen hero section" width="320" />
 </div>
 
 ---
