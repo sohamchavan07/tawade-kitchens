@@ -5,12 +5,12 @@ Tawade Kitchen is a pickup-only food ordering web application for authentic Kolh
 ## 📸 Screenshots
 
 <div align="center">
-  <img src="frontend/src/assets/Screenshot from 2026-10-19 20-36-41.png" alt="Tawade Kitchen home screen" width="1000" />
+  <img src="frontend/src/assets/screenshot-home.png" alt="Tawade Kitchen home screen" width="1000" />
 </div>
 
 <div align="center">
-  <img src="frontend/src/assets/Screenshot from 2026-10-19 20-37-17.png" alt="Tawade Kitchen menu grid" width="320" />
-  <img src="frontend/src/assets/Screenshot from 2026-10-19 20-38-36.png" alt="Tawade Kitchen hero section" width="320" />
+  <img src="frontend/src/assets/screenshot-menu.png" alt="Tawade Kitchen menu grid" width="320" />
+  <img src="frontend/src/assets/screenshot-hero.png" alt="Tawade Kitchen hero section" width="320" />
 </div>
 
 ---
@@ -312,7 +312,7 @@ npm run build
    - Submit order with 12-digit UTR $\rightarrow$ verify order created with `payment_status: "submitted"`.
    - Confirm confirmation page shows *"Awaiting manual verification (पडताळणी बाकी)"*.
    - In ActiveAdmin, click **Verify Payment** $\rightarrow$ refresh confirmation page $\rightarrow$ status updates to *"Payment verified (पेमेंट पडताळणी झाली)"*.
-7. [ ] **Fulfillment Flow**: Transition order in ActiveAdmin: `Pending` $\rightarrow$ `Confirmed` $\rightarrow$ `Preparing` $\rightarrow$ `Ready for Pickup` $\rightarrow$ `Collected`.
+7. [ ] **Fulfillment Flow**: Transition order in ActiveAdmin: `Pending` $\rightarrow$ `Confirmed` $\rightarrow` `Preparing` $\rightarrow$ `Ready for Pickup` $\rightarrow$ `Collected`.
 8. [ ] **Optional WhatsApp Receipt**: Click *"WhatsApp उघडा"* on confirmation page $\rightarrow$ verify pre-filled message has exact order number, items, and total amount.
 9. [ ] **Privacy**: Confirm customer phone number is visible only inside ActiveAdmin and never on the public confirmation page.
 
