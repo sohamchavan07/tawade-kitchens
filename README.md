@@ -5,12 +5,12 @@ Tawade Kitchen is a pickup-only food ordering web application for authentic Kolh
 ## 📸 Screenshots
 
 <div align="center">
-  <img src="frontend/src/assets/screenshot-home.png" alt="Tawade Kitchen home screen" width="1000" />
+  <img src="docs/screenshots/screenshot-home.png" alt="Tawade Kitchen home screen" width="1000" />
 </div>
 
 <div align="center">
-  <img src="frontend/src/assets/screenshot-menu.png" alt="Tawade Kitchen menu grid" width="320" />
-  <img src="frontend/src/assets/screenshot-hero.png" alt="Tawade Kitchen hero section" width="320" />
+  <img src="docs/screenshots/screenshot-menu.png" alt="Tawade Kitchen menu grid" width="320" />
+  <img src="docs/screenshots/screenshot-hero.png" alt="Tawade Kitchen hero section" width="320" />
 </div>
 
 ---

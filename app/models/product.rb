@@ -9,6 +9,8 @@ class Product < ApplicationRecord
   validates :stock_quantity, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :preparation_time, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true
 
+  UNITS = [ "per kg", "per piece", "per thali" ].freeze
+
   scope :available, -> { where(is_available: true) }
   scope :by_category, ->(cat) { where(category: cat) if cat.present? }
   scope :spicy, -> { where("LOWER(spice_level) IN (?) OR LOWER(name) IN (?)", %w[spicy medium], %w[bakarvadi sev chakli]) }
@@ -16,7 +18,7 @@ class Product < ApplicationRecord
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[
-      id name description price stock_quantity category
+      id name description price stock_quantity category unit
       preparation_time vegetarian is_available ingredients spice_level
       created_at updated_at
     ]
@@ -27,6 +29,7 @@ class Product < ApplicationRecord
       id: id,
       name: name,
       price: price.to_f,
+      unit: unit,
       category: category,
       vegetarian: vegetarian,
       is_available: is_available,

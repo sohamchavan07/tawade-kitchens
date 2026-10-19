@@ -3,7 +3,7 @@
 ActiveAdmin.register Product do
   menu priority: 1, label: "Menu Items (मेनू पदार्थ)"
 
-  permit_params :name, :description, :price, :stock_quantity, :category, :image_url, :preparation_time, :vegetarian, :is_available
+  permit_params :name, :description, :price, :unit, :stock_quantity, :category, :image_url, :preparation_time, :vegetarian, :is_available
 
   config.sort_order = "name_asc"
 
@@ -12,6 +12,7 @@ ActiveAdmin.register Product do
   scope("Unavailable (अनुपलब्ध)") { |prods| prods.where(is_available: false) }
   scope("Sweets (गोड पदार्थ)") { |prods| prods.where(category: "Sweets") }
   scope("Snacks (फराळ)") { |prods| prods.where(category: "Snacks") }
+  scope("Lunch (जेवण)") { |prods| prods.where(category: "Lunch") }
 
   member_action :toggle_availability, method: :put do
     resource.update!(is_available: !resource.is_available)
@@ -34,6 +35,7 @@ ActiveAdmin.register Product do
     column :price do |product|
       number_to_currency(product.price, unit: "₹")
     end
+    column :unit
     column :stock_quantity
     column "Prep (Min)", :preparation_time
     column :vegetarian do |product|
@@ -57,6 +59,7 @@ ActiveAdmin.register Product do
       row :price do |product|
         number_to_currency(product.price, unit: "₹")
       end
+      row :unit
       row :stock_quantity
       row :preparation_time do |product|
         "#{product.preparation_time} minutes"
@@ -77,8 +80,9 @@ ActiveAdmin.register Product do
     f.inputs "Menu Item Details" do
       f.input :name
       f.input :description
-      f.input :category, as: :select, collection: %w[Sweets Snacks Beverages Bakery Other]
+      f.input :category, as: :select, collection: %w[Sweets Snacks Lunch Beverages Bakery Other]
       f.input :price, min: 0, step: 0.5
+      f.input :unit, as: :select, collection: Product::UNITS
       f.input :stock_quantity, min: 0
       f.input :preparation_time, label: "Preparation Time (minutes)", min: 0
       f.input :vegetarian, as: :boolean
@@ -100,7 +104,7 @@ ActiveAdmin.register Product do
   end
 
   filter :name
-  filter :category, as: :select, collection: %w[Sweets Snacks Beverages Bakery Other]
+  filter :category, as: :select, collection: %w[Sweets Snacks Lunch Beverages Bakery Other]
   filter :price
   filter :is_available, as: :select
   filter :vegetarian, as: :select

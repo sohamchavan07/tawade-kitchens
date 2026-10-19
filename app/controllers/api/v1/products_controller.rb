@@ -23,6 +23,7 @@ module Api
           name: product.name,
           description: product.description,
           price: product.price.to_f,
+          unit: product.unit,
           image_url: product.image_url,
           category: product.category,
           is_available: product.is_available,

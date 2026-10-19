@@ -44,7 +44,7 @@ class MenuAssistantService
           p.name.downcase.in?(%w[bakarvadi sev chakli chivda])
       end
 
-      items_desc = spicy_items.map { |p| "#{p.name} (₹#{format('%.2f', p.price)} - #{p.spice_level&.capitalize || 'Medium'} spicy)" }.join(", ")
+      items_desc = spicy_items.map { |p| "#{p.name} (₹#{format('%.2f', p.price)} #{p.unit} - #{p.spice_level&.capitalize || 'Medium'} spicy)" }.join(", ")
 
       return {
         reply: "Here are our authentic spicy and spiced snacks prepared with traditional Kolhapuri masalas:\n• #{items_desc}.\nBakarvadi and Sev have the most prominent spicy kick!",
@@ -82,7 +82,7 @@ class MenuAssistantService
       if budget_items.any?
         return {
           reply: "Here are our items priced under ₹#{budget.to_i}:\n" +
-                 budget_items.map { |p| "• #{p.name} - ₹#{format('%.2f', p.price)}" }.join("\n"),
+                 budget_items.map { |p| "• #{p.name} - ₹#{format('%.2f', p.price)} #{p.unit}" }.join("\n"),
           products: budget_items.map(&:as_catalog_json),
           source: "rule"
         }
@@ -119,10 +119,24 @@ class MenuAssistantService
       sweets = available_products.select { |p| p.category.to_s.downcase == "sweets" || p.name.downcase.include?("ladoo") }
       return {
         reply: "Here are our signature homemade sweets prepared with pure cow ghee:\n" +
-               sweets.map { |p| "• #{p.name} - ₹#{format('%.2f', p.price)} (#{p.description})" }.join("\n"),
+               sweets.map { |p| "• #{p.name} - ₹#{format('%.2f', p.price)} #{p.unit} (#{p.description})" }.join("\n"),
         products: sweets.map(&:as_catalog_json),
         source: "rule"
       }
+    end
+
+    # Rule 5b: Lunch inquiry ("lunch", "thali", "meal", "जेवण", "थाली")
+    if q.match?(/\b(lunch|lunches|thali|meal|meals|जेवण|थाली|खाना)\b/i)
+      lunch = available_products.select { |p| p.category.to_s.downcase == "lunch" }
+      if lunch.any?
+        return {
+          reply: "We serve fresh homemade Kolhapuri lunch daily for pickup:\n" +
+                 lunch.map { |p| "• #{p.name} - ₹#{format('%.2f', p.price)} #{p.unit} (#{p.description})" }.join("\n") +
+                 "\nOur Lunch Thali comes with 2 chapati, bhaji, dal and rice. All lunch items are vegetarian and made fresh each morning.",
+          products: lunch.map(&:as_catalog_json),
+          source: "rule"
+        }
+      end
     end
 
     # Rule 6: Pickup timing / operating hours / location
@@ -142,6 +156,7 @@ class MenuAssistantService
   def suggest_combo_for_people(people_count, products)
     sweets = products.select { |p| p.category.to_s.downcase == "sweets" }
     snacks = products.select { |p| p.category.to_s.downcase == "snacks" }
+    lunch = products.select { |p| p.category.to_s.downcase == "lunch" }
 
     combo = []
     if people_count <= 2
@@ -157,6 +172,12 @@ class MenuAssistantService
       combo << (snacks.find { |p| p.name.downcase.include?("chivda") } || snacks[2])
       combo << (sweets.find { |p| p.name.downcase.include?("besan") } || sweets[0])
       combo << (sweets.find { |p| p.name.downcase.include?("rava") } || sweets[1])
+    end
+
+    # Add a lunch thali for groups that need a full meal alongside the snacks
+    if people_count >= 3
+      thali = lunch.find { |p| p.name.downcase.include?("thali") } || lunch.first
+      combo << thali
     end
 
     combo.compact.uniq

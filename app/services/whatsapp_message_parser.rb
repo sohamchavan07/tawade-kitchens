@@ -67,7 +67,7 @@ class WhatsappMessageParser
         lines << ""
         lines << "*[ #{current_cat} ]*"
       end
-      lines << "• #{p.name} - ₹#{format('%.2f', p.price)}"
+      lines << "• #{p.name} - ₹#{format('%.2f', p.price)} #{p.unit}"
     end
 
     lines += [
