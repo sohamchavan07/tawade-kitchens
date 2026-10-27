@@ -50,3 +50,41 @@ Because the frontend is built as static Vite assets, any stale build still conta
 
 **Important:**
 After changing env vars, the app needs a fresh deploy/rebuild so the old built frontend bundle is replaced. Without rebuilding, the old localhost string remains in the served JS and the redirect keeps happening.
+
+
+
+## Production Frontend Calling `http://localhost:3000` (Menu "Failed to fetch")
+
+**Date:** 2026-10-27
+
+**Issue:**
+The live site (`tawade-kitchens.onrender.com`) showed "Failed to fetch" on the menu page. DevTools → Network showed the request going to `http://localhost:3000/api/v1/products`. Chrome ran that request against the visitor's own machine, so it failed.
+
+**Investigation:**
+1. `curl -i https://tawade-kitchens.onrender.com/api/v1/products` returned `200` with valid JSON, so the Rails API is healthy and the bug is in the frontend bundle.
+2. `frontend/src` has no literal `localhost:3000`. Four files (`lib/api.ts`, `Hero.tsx`, `Navigation.tsx`, `GoogleAuthButton.tsx`) each compute their own base URL from `import.meta.env.VITE_API_URL`.
+3. `frontend/.env` contains `VITE_API_URL=http://localhost:3000`, and Vite inlines env values into the bundle at build time. A build that reads that file bakes localhost into the JS.
+4. `frontend/.env.production` contradicts itself: the comment says the value is empty because Rails serves the frontend, but line 3 sets a full URL with a trailing slash.
+
+**Root Cause:**
+Production API calls depend on an env var instead of defaulting to same-origin. Any stale or local `VITE_API_URL` at build time is baked into the bundle and wins over the correct default. It is the same failure class as the 2026-10-14 Google OAuth fix.
+
+The 2026-05-22 entry's claim that Render strips gitignored files should be treated as unverified. A more likely explanation for the 404s is that `public/vite-assets` is now tracked in git, so the committed local build, with localhost inside it, is what gets served.
+
+**Fix:**
+- Added one exported `API_BASE_URL` in `frontend/src/lib/api.ts`. It uses `VITE_API_URL` only when `import.meta.env.DEV` is true and is `""` (same-origin) in production builds.
+- Replaced the per-component `railsBase` / `VITE_API_URL` logic in `Navigation.tsx`, `Hero.tsx` and `GoogleAuthButton.tsx` with `API_BASE_URL`.
+- Removed the contradictory `VITE_API_URL` line from `frontend/.env.production`.
+- Rebuilt the frontend and redeployed so the old bundle was replaced.
+
+**Verification:**
+```bash
+curl -s https://tawade-kitchens.onrender.com/ | grep -oE 'src="/vite-assets/[^"]+\.js"'
+curl -s https://tawade-kitchens.onrender.com/vite-assets/<REAL-FILE>.js | grep -c "localhost:3000"   # expect 0
+```
+DevTools → Network → `products` should show `https://tawade-kitchens.onrender.com/api/v1/products` with status 200.
+
+**Prevention:**
+- Production must never read a base URL from env. Same-origin is the default.
+- Don't commit locally built assets. Build only in `bin/render-build.sh`.
+- After any env or API-URL change, grep the deployed bundle for `localhost` before calling it fixed.
