@@ -40,3 +40,5 @@ frontend/.env*
 /frontend/dist
 frontend/.env
 frontend/.env
+.env
+.env.local
