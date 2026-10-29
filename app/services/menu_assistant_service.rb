@@ -26,6 +26,10 @@ class MenuAssistantService
 
   private
 
+  def lunch_products_for_display(products)
+    products.reject { |product| product.name.to_s.match?(/thali|combo/i) }
+  end
+
   def empty_query_response
     {
       reply: "नमस्कार! मी Tawade Kitchen मेनू सहाय्यक आहे. आपण पदार्थांचे स्वाद (तिखट/गोड), बजेट, शाकाहारी पर्याय किंवा किती लोकांसाठी ऑर्डर करायची ते विचारू शकता!",
@@ -127,7 +131,7 @@ class MenuAssistantService
 
     # Rule 5b: Lunch inquiry ("lunch", "thali", "meal", "जेवण", "थाली")
     if q.match?(/\b(lunch|lunches|thali|meal|meals|जेवण|थाली|खाना)\b/i)
-      lunch = available_products.select { |p| p.category.to_s.downcase == "lunch" }
+      lunch = lunch_products_for_display(available_products.select { |p| p.category.to_s.downcase == "lunch" })
       if lunch.any?
         return {
           reply: "We serve fresh homemade Kolhapuri lunch daily for pickup:\n" +
@@ -156,7 +160,7 @@ class MenuAssistantService
   def suggest_combo_for_people(people_count, products)
     sweets = products.select { |p| p.category.to_s.downcase == "sweets" }
     snacks = products.select { |p| p.category.to_s.downcase == "snacks" }
-    lunch = products.select { |p| p.category.to_s.downcase == "lunch" }
+    lunch = lunch_products_for_display(products.select { |p| p.category.to_s.downcase == "lunch" })
 
     combo = []
     if people_count <= 2
