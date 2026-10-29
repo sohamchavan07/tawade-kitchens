@@ -2,7 +2,7 @@
 
 class RemoveSadhiAndLasunSevProducts < ActiveRecord::Migration[8.0]
   def up
-    Product.where(name: ["Sadhi Sev", "Lasun Sev"]).destroy_all
+    Product.where(name: [ "Sadhi Sev", "Lasun Sev" ]).destroy_all
   end
 
   def down

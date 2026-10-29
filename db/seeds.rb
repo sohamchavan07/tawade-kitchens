@@ -14,9 +14,7 @@ products = [
   { name: 'Chapati', price: 20, unit: 'per piece', category: 'Lunch', stock_quantity: 100, description: '2 soft homemade chapatis.', preparation_time: 10, vegetarian: true, is_available: true },
   { name: 'Bhaji / Sabzi', price: 50, unit: 'per piece', category: 'Lunch', stock_quantity: 40, description: 'Daily homemade vegetable dish.', preparation_time: 20, vegetarian: true, is_available: true },
   { name: 'Dal', price: 40, unit: 'per piece', category: 'Lunch', stock_quantity: 40, description: 'Homemade dal, served hot.', preparation_time: 15, vegetarian: true, is_available: true },
-  { name: 'Rice', price: 40, unit: 'per piece', category: 'Lunch', stock_quantity: 40, description: 'Steamed rice.', preparation_time: 15, vegetarian: true, is_available: true },
-  { name: 'Lunch Thali', price: 100, unit: 'per thali', category: 'Lunch', stock_quantity: 30, description: '2 chapati + bhaji + dal + rice.', preparation_time: 25, vegetarian: true, is_available: true },
-  { name: 'Mini Lunch Combo', price: 60, unit: 'per piece', category: 'Lunch', stock_quantity: 30, description: '1 chapati + bhaji + rice.', preparation_time: 20, vegetarian: true, is_available: true }
+  { name: 'Rice', price: 40, unit: 'per piece', category: 'Lunch', stock_quantity: 40, description: 'Steamed rice.', preparation_time: 15, vegetarian: true, is_available: true }
 ]
 
 products.each do |p|
